@@ -1,0 +1,251 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main ( ){
+	int i, j, linha, coluna, contador, menu = 6;
+  int vitorias[100];
+  int jogadores[100]; 
+  int jogador1;
+  int jogador2;
+  int jogadas=0;
+  int opção;
+  int partidas_usuario[100];
+  int vt, v[100];
+  int ranking[100];
+  int jogarnovamente = 9;
+  int opção2;
+
+
+	char matriz[3][3];
+
+  while (menu == 6){
+  
+  for(int i=0; i<100; i++){
+    jogadores[i] = i;
+    vitorias[i] = 0;
+    partidas_usuario[i]= 0;
+  }
+	   
+
+  printf("Bem vindo ao Menu do Jogo da Velha");
+  printf("\n\n APERTE 1 PARA JOGAR\n APERTE 2 PARA VER O RANKING \n APERTE 3 PARA VER INFORMAÇÕES \n APERTE 4 PARA SAIR DO JOGO");
+
+  printf("\n\nDigite o numero que deseja: ");
+  scanf("%d", &menu);
+
+
+  switch (menu){
+
+
+	    case 1:
+	for(i = 0; i < 3; i++){
+		putchar('\n');
+		for(j = 0; j < 3; j++){
+			putchar('\t');
+			matriz[i][j] = '.';
+			printf("%c", matriz[i][j]);
+		}
+		putchar('\n');
+		putchar('\n');
+	}
+	//primeiro jogador sempre será 'x' e o segundo sempre será 'O';
+	  printf("Insira seu número de jogador: ");
+    scanf("%d", &jogador1);
+
+    	  printf("Insira seu número de jogador: ");
+    scanf("%d", &jogador2);
+
+    while (jogarnovamente == 9){
+      	for(i = 0; i < 3; i++){
+		putchar('\n');
+		for(j = 0; j < 3; j++){
+			putchar('\t');
+			matriz[i][j] = '.';
+			printf("%c", matriz[i][j]);}
+        }
+        
+      
+
+
+  for (contador = 0; contador < 9; contador++){
+
+		
+		/*A variação do contador deve ser sempre 9, pois são apenas 9 possíveis jogadas
+		 *Se alternamos o valor de início do contador, deve se alterar seu límite de forma à 
+		 *diferença permanecer sempre 9  >  9 - 0 = 9.
+		 *Além disso, é necessário notar que, mais a frente, o contador é usado na definição 
+		 *de qual jogador ganhou, sendo portanto a alteração aqui feita , lá levada em conta
+		 */
+		 
+
+     printf("\n\n\nJogador 1 = X\n\nJogador 2 = O");
+
+     if(contador %2 == 0){
+        printf("\n\nVez do Jogador 1 = X");
+     }
+
+    else{
+       printf("\n\nVez do Jogador 2 = O");
+     }
+	  	printf("\n\nInsira a Linha que ficará o símbolo:\n");
+		 scanf("%d", &linha);
+		
+
+		linha--;
+		
+		printf("\n\nInsira a coluna em que ficará o símbolo:\n");
+		scanf("%d", &coluna);
+		
+		coluna--;
+		
+		putchar('\n');
+		if(matriz[linha][coluna] == '.'){
+		
+			if(contador%2){/*O módulo por 2 dará 1 ou 0: Se for 1, equivale a true e entra no if,
+                                        *se for 0 equivale a false e entra no else*/
+				matriz[linha][coluna] = 'O';
+			} 
+			else{
+				matriz[linha][coluna] = 'X';
+			}
+			for(i = 0; i < 3; i++){
+				putchar('\n');
+				for(j = 0; j < 3; j++){
+					putchar('\t');
+					printf("%c", matriz[i][j]);
+				}
+				putchar('\n');
+				putchar('\n');
+			}
+			if((matriz[0][0] == matriz[0][1] && matriz[0][0] == matriz[0][2] && matriz[0][0] != '.')||
+			   (matriz[0][0] == matriz[1][1] && matriz[0][0] == matriz[2][2] && matriz[0][0] != '.')||
+			   (matriz[0][0] == matriz[1][0] && matriz[0][0] == matriz[2][0] && matriz[0][0] != '.')||
+			   (matriz[0][1] == matriz[1][1] && matriz[0][1] == matriz[2][1] && matriz[0][1] != '.')||
+			   (matriz[0][2] == matriz[1][2] && matriz[0][2] == matriz[2][2] && matriz[0][2] != '.')||
+			   (matriz[1][0] == matriz[1][1] && matriz[1][0] == matriz[1][2] && matriz[1][0] != '.')||
+			   (matriz[2][0] == matriz[2][1] && matriz[2][0] == matriz[2][2] && matriz[2][0] != '.')||
+			   (matriz[2][0] == matriz[1][1] && matriz[2][0] == matriz[0][2] && matriz[2][0] != '.')){
+					
+				printf("\n\nJogador %d ganhou!", (contador%2) + 1);	
+        
+       
+        
+        vitorias[contador%2 + 1] += 1;
+        
+         
+
+        //*O jogador que deveria ser 0 é acrescido de 1, tornando-se jogador 1*/
+							/*O jogador que deveria ser 1 é acrescido de 1, tornando-se jogador 2*/
+			}
+		}
+		else{
+			printf("\nNúmero inválido! Use somente 1, 2 e 3\n");
+			contador--;
+		}
+	}
+	
+	printf("\nDeu Velha! :("); 
+  
+
+  printf("Digite 9 para jogar novamente e 6 para ir ao menu");
+     if (opção2 == 9){
+          jogarnovamente = 9;
+          menu = 7;
+         
+         
+     }
+        else{
+          menu = 6;
+          jogarnovamente = 8;
+        }
+
+    }
+   jogadas=jogadas + 1;
+        
+    partidas_usuario[jogador1] += 1;
+    partidas_usuario[jogador2] += 1;
+    
+   	
+    
+    break; 
+    
+case 2:
+  printf("\n\nAperte 1 para ver jogadas ao todo");
+  printf("\n\nAperte 2 para ver jogadas por usuario");
+  printf("\n\nAperte 3 para ver a quantidade de vitorias do jogador 1");
+  printf("\n\nAperte 4 para ver a quantidade de vitorias do jogador 2");
+  printf("\n\nAperte 5 para ver ranking dos jogadores em ordem decrescente do número de vitórias.");
+
+  printf("\n\n\n Digite a opção desejada:");
+  scanf("%d", &opção);
+      
+      switch(opção){
+        case 1:
+          printf("\n\nAs jogadas ao todo foram: %d ", jogadas);
+          break;
+
+        case 2:
+        for (int i=0; i<100; i++){
+          printf("\n\nAs jogadas por usuário foram: %d",partidas_usuario[i]);
+        }
+          break;
+
+        case 3:
+        for(int i=0; i<100; i++){
+          printf("\n\nAs vitórias do jogador 1 foram: %d", vitorias[i]);
+        }
+         break;
+        case 4:
+          for(int i=0; i<100; i++){
+          printf("\n\nAs vitórias do jogador 2 foram: %d", vitorias[i]);
+        }
+        break;
+         
+        case 5:
+
+         for (int i=0; i<100; i++){
+           v[i] = vitorias[i];
+           ranking[i] = jogadores[i];
+         }
+
+
+
+
+         for( i=0; i<10; i++){
+         for (j=i+1; j<10; j++){
+         if (v[i] < v[j]){
+            vt = v[i];
+              v[i] = v[j];
+               v[j] = vt;
+                    }
+                  }
+                  }
+         }
+            
+
+           for( i=0; i<100; i++){
+          printf("O ranking dos Jogadores, em ordem descrescente, foi: %d", v[i]);
+        }
+        break;
+      
+        
+
+
+  
+        
+  }
+
+      
+  }  
+
+
+
+
+
+
+
+
+  
+
+ 
+}
