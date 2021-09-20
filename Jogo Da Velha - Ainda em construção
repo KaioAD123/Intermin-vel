@@ -1,183 +1,211 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main ( ){
+int main ( ){ 
+  //Variáveis
 	int i, j, linha, coluna, contador, menu = 6;
-  int vitorias[100];
+  int vitorias[100]= {0};
   int jogadores[100]; 
   int jogador1;
   int jogador2;
   int jogadas=0;
   int opção;
-  int partidas_usuario[100];
-  int vt, v[100];
+  int partidas_usuario[100] = {0};
+  int aux1, v[100]={0};
   int ranking[100];
   int jogarnovamente = 9;
   int opção2;
+  int sair;
+  int opção3;
+  int aux2;
+  int velha=0;
+
+//tabuleiro em char
+	char tabuleiro[3][3];
 
 
-	char matriz[3][3];
-
+   for(int i=0; i<100; i++){
+    jogadores[i] = i;
+    
+   }
+  //código aberto em While, valor de 6 é definido ao apertar a tecla, o menu é aberto.
   while (menu == 6){
   
-  for(int i=0; i<100; i++){
-    jogadores[i] = i;
-    vitorias[i] = 0;
-    partidas_usuario[i]= 0;
-  }
-	   
+  
 
-  printf("Bem vindo ao Menu do Jogo da Velha");
-  printf("\n\n APERTE 1 PARA JOGAR\n APERTE 2 PARA VER O RANKING \n APERTE 3 PARA VER INFORMAÇÕES \n APERTE 4 PARA SAIR DO JOGO");
+    printf("Bem vindo ao Menu do Jogo da Velha");
+    printf("\n\n [1]Iniciar Game\n [2]Visualizar Informações \n [3]Carregar Valores \n [4]Sair do Jogo");
 
-  printf("\n\nDigite o numero que deseja: ");
-  scanf("%d", &menu);
+    printf("\n\nDigite o numero que deseja: ");
+    scanf("%d", &menu);
 
 
   switch (menu){
 
 
 	    case 1:
-	for(i = 0; i < 3; i++){
-		putchar('\n');
-		for(j = 0; j < 3; j++){
-			putchar('\t');
-			matriz[i][j] = '.';
-			printf("%c", matriz[i][j]);
-		}
-		putchar('\n');
-		putchar('\n');
-	}
-	//primeiro jogador sempre será 'x' e o segundo sempre será 'O';
-	  printf("Insira seu número de jogador: ");
-    scanf("%d", &jogador1);
+	      for(i = 0; i < 3; i++){
+		      printf("\n"); //onde tinha função, troquei pelo Printf. Funcionou da mesma forma.
+		    for(j = 0; j < 3; j++){
+			    printf("\t");  //mesma coisa que apertar TAB
+			      tabuleiro[i][j] = '.';
+		        	printf("%c", tabuleiro[i][j]);
+		    }
+		      printf("\n");
+          printf("\n");
+	    }
+
+	      printf("Insira seu número de jogador: ");
+        scanf("%d", &jogador1);
 
     	  printf("Insira seu número de jogador: ");
-    scanf("%d", &jogador2);
+        scanf("%d", &jogador2);
 
     while (jogarnovamente == 9){
       	for(i = 0; i < 3; i++){
-		putchar('\n');
-		for(j = 0; j < 3; j++){
-			putchar('\t');
-			matriz[i][j] = '.';
-			printf("%c", matriz[i][j]);}
+		      printf("\n");
+		    for(j = 0; j < 3; j++){
+			    printf("\t");
+			      tabuleiro[i][j] = '.';
+			        printf("%c", tabuleiro[i][j]);}
         }
         
       
 
 
-  for (contador = 0; contador < 9; contador++){
+        for (contador = 0; contador < 9; contador++){
 
 		
-		/*A variação do contador deve ser sempre 9, pois são apenas 9 possíveis jogadas
-		 *Se alternamos o valor de início do contador, deve se alterar seu límite de forma à 
-		 *diferença permanecer sempre 9  >  9 - 0 = 9.
-		 *Além disso, é necessário notar que, mais a frente, o contador é usado na definição 
-		 *de qual jogador ganhou, sendo portanto a alteração aqui feita , lá levada em conta
-		 */
+	      //contador sempre será 9 devido às 9 jogadas.
 		 
 
-     printf("\n\n\nJogador 1 = X\n\nJogador 2 = O");
+          printf("\n\n\nJogador [1] será [X]\nJogador [2] será [O]");
 
-     if(contador %2 == 0){
-        printf("\n\nVez do Jogador 1 = X");
-     }
+        if(contador %2 == 0){
+          printf("\n\n\nJogador [1]");
+        }
 
-    else{
-       printf("\n\nVez do Jogador 2 = O");
-     }
-	  	printf("\n\nInsira a Linha que ficará o símbolo:\n");
-		 scanf("%d", &linha);
+          else{
+            printf("\n\n\nJogador [2] = O");
+          }
+
+
+          
+	  	      printf("\n\nInsira a LINHA que ficará o símbolo:\n");
+		        scanf("%d", &linha);
 		
 
-		linha--;
+		      linha--;
 		
-		printf("\n\nInsira a coluna em que ficará o símbolo:\n");
-		scanf("%d", &coluna);
+		        printf("\n\nInsira a COLUNA em que ficará o símbolo:\n");
+		        scanf("%d", &coluna);
 		
-		coluna--;
+		      coluna--;
 		
-		putchar('\n');
-		if(matriz[linha][coluna] == '.'){
+		    printf("\n");
+		if(tabuleiro[linha][coluna] == '.'){
 		
-			if(contador%2){/*O módulo por 2 dará 1 ou 0: Se for 1, equivale a true e entra no if,
-                                        *se for 0 equivale a false e entra no else*/
-				matriz[linha][coluna] = 'O';
+			if(contador%2){
+				tabuleiro[linha][coluna] = 'O';
+        velha++;
 			} 
 			else{
-				matriz[linha][coluna] = 'X';
+				tabuleiro[linha][coluna] = 'X';
+        velha++;
 			}
 			for(i = 0; i < 3; i++){
-				putchar('\n');
-				for(j = 0; j < 3; j++){
-					putchar('\t');
-					printf("%c", matriz[i][j]);
-				}
-				putchar('\n');
-				putchar('\n');
+				  printf("\n");
+				    for(j = 0; j < 3; j++){
+					    printf("\t");
+					      printf("%c", tabuleiro[i][j]);
+				    }   
+				printf("\n");
+				printf("\n");
 			}
-			if((matriz[0][0] == matriz[0][1] && matriz[0][0] == matriz[0][2] && matriz[0][0] != '.')||
-			   (matriz[0][0] == matriz[1][1] && matriz[0][0] == matriz[2][2] && matriz[0][0] != '.')||
-			   (matriz[0][0] == matriz[1][0] && matriz[0][0] == matriz[2][0] && matriz[0][0] != '.')||
-			   (matriz[0][1] == matriz[1][1] && matriz[0][1] == matriz[2][1] && matriz[0][1] != '.')||
-			   (matriz[0][2] == matriz[1][2] && matriz[0][2] == matriz[2][2] && matriz[0][2] != '.')||
-			   (matriz[1][0] == matriz[1][1] && matriz[1][0] == matriz[1][2] && matriz[1][0] != '.')||
-			   (matriz[2][0] == matriz[2][1] && matriz[2][0] == matriz[2][2] && matriz[2][0] != '.')||
-			   (matriz[2][0] == matriz[1][1] && matriz[2][0] == matriz[0][2] && matriz[2][0] != '.')){
+			    if((tabuleiro[0][0] == tabuleiro[0][1] && tabuleiro[0][0] == tabuleiro[0][2] && tabuleiro[0][0] != '.')||
+			     (tabuleiro[0][0] == tabuleiro[1][1] && tabuleiro[0][0] == tabuleiro[2][2] && tabuleiro[0][0] != '.')||
+			     (tabuleiro[0][0] == tabuleiro[1][0] && tabuleiro[0][0] == tabuleiro[2][0] && tabuleiro[0][0] != '.')||
+			     (tabuleiro[0][1] == tabuleiro[1][1] && tabuleiro[0][1] == tabuleiro  [2][1] && tabuleiro[0][1] != '.')||
+			     (tabuleiro[0][2] == tabuleiro[1][2] && tabuleiro[0][2] == tabuleiro[2][2] && tabuleiro[0][2] != '.')||
+			     (tabuleiro[1][0] == tabuleiro[1][1] && tabuleiro[1][0] == tabuleiro[1][2] && tabuleiro[1][0] != '.')||
+			     (tabuleiro[2][0] == tabuleiro[2][1] && tabuleiro[2][0] == tabuleiro  [2][2] && tabuleiro[2][0] != '.')||
+			     (tabuleiro[2][0] == tabuleiro[1][1] && tabuleiro[2][0] == tabuleiro[0][2] && tabuleiro[2][0] != '.')){ //exibir vencedor ou perdedor (comparador).
+
+          
+           
 					
-				printf("\n\nJogador %d ganhou!", (contador%2) + 1);	
+			    	printf("\n\nJogador %d ganhou!", (contador%2) + 1);	
+             contador = 20;
         
-       
+         
         
-        vitorias[contador%2 + 1] += 1;
+             vitorias[contador%2 + 1] += 1;
+        
         
          
 
-        //*O jogador que deveria ser 0 é acrescido de 1, tornando-se jogador 1*/
-							/*O jogador que deveria ser 1 é acrescido de 1, tornando-se jogador 2*/
-			}
-		}
-		else{
-			printf("\nNúmero inválido! Use somente 1, 2 e 3\n");
-			contador--;
-		}
-	}
-	
-	printf("\nDeu Velha! :("); 
-  
+        
+			      }
+		
+ 
+      } 
+          
+          //se digitar 1, 2 ou 3, dará lugar no tabuleiro. Se digitar outro valor, será inválido!
+    
+		    else{
+			    printf("\nNúmero inválido! Use somente 1, 2 e 3\n");
+			      contador--;
+            velha--;
+       
+	      }
+        // se der maior ou igual a 9, deu velha
+        if (velha >= 9){
+          printf("\nDeu Velha :(");
+    
+      }
+    }
 
-  printf("Digite 9 para jogar novamente e 6 para ir ao menu");
+  
+  
+           //ao terminar o jogo, será printado ao usuário para escolher as opções de ir ao menu ou jogar Novamente
+
+         printf("\n\n [6]Ir ao Menu \n [9]Jogar Novamente\n\n Escolha sua Opção: ");
+         scanf("%d", &opção2);
+
+         //se apertar 9, jogue novamemte. Se apertar 6, volte ao menu
      if (opção2 == 9){
           jogarnovamente = 9;
           menu = 7;
-         
-         
-     }
+      }
         else{
           menu = 6;
           jogarnovamente = 8;
         }
 
-    }
-   jogadas=jogadas + 1;
+    
+          jogadas=jogadas + 1;
         
-    partidas_usuario[jogador1] += 1;
-    partidas_usuario[jogador2] += 1;
+          partidas_usuario[jogador1] += 1;
+          partidas_usuario[jogador2] += 1;
+    
     
    	
+    }
+      break; 
     
-    break; 
-    
-case 2:
-  printf("\n\nAperte 1 para ver jogadas ao todo");
-  printf("\n\nAperte 2 para ver jogadas por usuario");
-  printf("\n\nAperte 3 para ver a quantidade de vitorias do jogador 1");
-  printf("\n\nAperte 4 para ver a quantidade de vitorias do jogador 2");
-  printf("\n\nAperte 5 para ver ranking dos jogadores em ordem decrescente do número de vitórias.");
+    // menu de Informações
 
-  printf("\n\n\n Digite a opção desejada:");
-  scanf("%d", &opção);
+
+      case 2:
+        printf("\n\n\n>>>INFORMAÇÕES<<<");
+        printf("\n\n[1]Jogadas");
+        printf("\n\n[2]Jogadas por usuário");
+        printf("\n\n[3]Quantidade de Vitórias");
+        printf("\n\n[4]Quantidade de Vitórias por Usuário");
+        printf("\n\n[5]Ranking.");
+
+        printf("\n\n\n Digite a opção desejada:");
+        scanf("%d", &opção);
       
       switch(opção){
         case 1:
@@ -186,66 +214,86 @@ case 2:
 
         case 2:
         for (int i=0; i<100; i++){
-          printf("\n\nAs jogadas por usuário foram: %d",partidas_usuario[i]);
+          printf("\n\nO jogador %d jogou %d partidas",jogadores[i], partidas_usuario[i]);
         }
           break;
 
         case 3:
         for(int i=0; i<100; i++){
-          printf("\n\nAs vitórias do jogador 1 foram: %d", vitorias[i]);
+          printf("\n\nAs vitórias do jogador %d foram: %d",jogadores[i], vitorias[i]);
         }
          break;
         case 4:
-          for(int i=0; i<100; i++){
-          printf("\n\nAs vitórias do jogador 2 foram: %d", vitorias[i]);
-        }
-        break;
+          
+          printf("\n\nQual usuário você deseja ver a vitória?");
+          scanf("%d", &i);
+          printf("\n\nEsse usuário teve %d", vitorias[i]);
+        
+          break;
          
         case 5:
 
-         for (int i=0; i<100; i++){
-           v[i] = vitorias[i];
-           ranking[i] = jogadores[i];
+          for (int i=0; i<100; i++){
+           
+            ranking[i] = vitorias[i];
          }
 
 
+          //ordenação de valores. 
 
+          for( i=0; i<100; i++){
+              for (j=i+1; j<100; j++){
+                if (ranking[i] < ranking[j]){ //ordem decrescente
 
-         for( i=0; i<10; i++){
-         for (j=i+1; j<10; j++){
-         if (v[i] < v[j]){
-            vt = v[i];
-              v[i] = v[j];
-               v[j] = vt;
-                    }
-                  }
-                  }
-         }
+                //vetor de ranking (Posições)
+                  aux1 = ranking[i];
+                  ranking[i] = ranking[j];
+                  ranking[j] = aux1;
+                //vetor de jogadores(id do jogador)
+                  aux2 = jogadores[i];
+                  jogadores [i] = jogadores[j];
+                  jogadores[j] = aux2;
+                // Colocar os valores de vitória e usuário em outro vetor. Quando vitorias na posição 1 for menor que na posição 2 eles são trocados. Quando trocados, o vetor também é alterado. Depois compara a segunda posição com a terceira. assim por diante.
+              }
+            }
+          }
+         
             
 
            for( i=0; i<100; i++){
-          printf("O ranking dos Jogadores, em ordem descrescente, foi: %d", v[i]);
-        }
+              printf("\n\n O jogador %d possui %d vitórias", jogadores[i], ranking[i]);
+          }
         break;
-      
-        
+      }
 
 
-  
-        
-  }
+  case 3:
+   //carregar valores funciona pra atribuir valor ao vetor. Ex: Vetor[1] = 1
+    for(int i = 0; i <100; i++){
+    vitorias[i] = i;
+    partidas_usuario[i] = i;
+    jogadas += i;
+    }
 
-      
+    printf("\n\n[6]Para voltar ao Menu: ");
+    scanf("%d", &menu);
+    break;
+
+
+  case 4:
+         
+
+        printf("\n\nObrigado por jogar o Jogo da Velha - TADS :))\nAté a Próxima!");
+      while (sair == 4){
+          if (opção3 == 4){
+              sair = 4;
+          }
+        else{
+          return 0;
+        }
+           
+      break;    
+      }
+    }   
   }  
-
-
-
-
-
-
-
-
-  
-
- 
 }
